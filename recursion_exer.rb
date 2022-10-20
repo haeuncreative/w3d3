@@ -267,43 +267,40 @@ end
 # Write a method p subsets that will return all p subsets of an array.
 
 def subsets(arr)
-    subs = []
-    if arr.empty?
-        return [[]]
-    elsif arr.length == 1
-        return [arr.first]
-    end
-    # subs << [arr.first] 
-    # subs << subsets(arr[1..-1])
-    # subs += [arr]
 
 
-    (0...arr.length).each do |i|
-        (0...arr.length).each do |j|
-            if j > i
-                subsets(arr[1..-1])
-
-                subs += arr[i..j]
-            end
-        end
-    end
-
-
-    
-
+  return [[]] if arr.length == 0
+  prev = subsets(arr[0..-2])
+  others = prev.map { |subarr| subarr += [arr.last] }
+  prev + others
 end
 
-# def subsets(arr)
-#     if arr.length == 1
-#         return arr
-#     end
-    
-#     subsets = Array.new
-#     subsets << arr
-#     subsets << subsets(arr[0..1])
-#     subsets << subsets(arr[1..-1])
+# [1,2,3]
+# [1,2] -> [1] -> [[]]
+# prev = [[]]
+# others = [[1]]
+# [[], [1]]
+# prev = [[], [1]]
+# others = [[2], [1,2]]
+# prev = [[], [1], [2], [1,2]]
+# others = [[3], [1,3], [2,3], [1,2,3]]
+# [[], [1], [2], [1,2], [3], [1,3], [2,3], [1,2,3]]
 
-# end
+    # (0...arr.length).each do |i|
+    #     (0...arr.length).each do |j|
+    #         if j > i
+    #             subsets(arr[1..-1])
+
+    #             subs += arr[i..j]
+    #         end
+    #     end
+    # end
+
+
+    
+
+
+
 
 # def subsets(arr)
 #     # arr2 = Array.new {Array.new}
@@ -336,14 +333,31 @@ p subsets([1, 2, 3])
 # Hint: For p subsets([1, 2, 3]), there are two kinds of p subsets:
 
 # Those that do not contain 3 (all of these are p subsets of [1, 2]).
-# For every subset that does not contain 3, there is also a corresponding subset that is the same, except it also does contain 3.
+# For every subset that does not contain 3, there is also a corresponding subset 
+# that is the same, except it also does contain 3.
 # Permutations
-# Write a recursive method permutations(array) that calculates all the permutations of the given array. For an array of length n there are n! different permutations. So for an array with three elements we will have 3 * 2 * 1 = 6 different permutations.
+# Write a recursive method permutations(array) that calculates all the 
+# permutations of the given array. 
+# For an array of length n there are n! different permutations. 
+# So for an array with three elements we will have 3 * 2 * 1 = 6 different permutations.
+
+def permutations(arr)
+  return [[]] if arr.length == 0
+  prev = subsets(arr[0..-2])
+  others = prev.map { |subarr| subarr += [arr.last] }
+  prev + others
+end
+
+def factorial
+    
+end
+
 
 permutations([1, 2, 3]) # => [[1, 2, 3], [1, 3, 2],
                         #     [2, 1, 3], [2, 3, 1],
                         #     [3, 1, 2], [3, 2, 1]]
-# You can use Ruby's built in Array#permutation method to get a better understanding of what you will be building.
+# You can use Ruby's built in Array#permutation method to get a better understanding 
+# of what you will be building.
 
 # [1, 2, 3].permutation.to_a  # => [[1, 2, 3], [1, 3, 2],
 #                             #     [2, 1, 3], [2, 3, 1],
